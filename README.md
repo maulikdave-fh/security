@@ -22,7 +22,7 @@ Security vulnerability impacts availability, integrity and confidentiality of da
 #### Input validation
 Never trust user provided data or data coming from other apps / services. 
 1. Input data validations on type, length, limits.
-2. Rate Limiting / Throttling
+2. Rate Limiting / Throttling - In microservices architecture, API gateway can be leveraged for this
 3. Schema based validations
 4. White-listing
 
@@ -86,7 +86,7 @@ Never trust user provided data or data coming from other apps / services.
 
 ## OAuth2.0 Authorization Framework - For Delegated Access
 1. OAuth 2.0 is a protocol that allows users to grant third-party applications access to their resources without sharing their credentials. It uses access tokens to authorize API requests, allowing clients to access protected resources. It focuses on granting access to resources, not verifying user identity.
-2. Profiles of access tokens: Identifier-based (Holder of Key - like credit card) and Self-contained (Bearer - like cash). Self-contained access tokens are easy to scale with distributed applications as they do not require the resource server to validate the token with the authorization server. On the other hand, an Identifier-based token is a hard-to-guess string, which the resource server needs to validate by making a call to the authorisation server's introspection endpoint, which adds latency and makes it difficult to scale with distributed applications. 
+2. Profiles of access tokens: Identifier-based (Holder of Key - like credit card - reference token) and Self-contained (Bearer - like cash - value token). Self-contained access tokens are easy to scale with distributed applications as they do not require the resource server to validate the token with the authorization server. On the other hand, an Identifier-based token is a hard-to-guess string, which the resource server needs to validate by making a call to the authorisation server's introspection endpoint, which adds latency and makes it difficult to scale with distributed applications. 
 3. OAuth2.0 Flows - multiple flows - use based on system architecture
 
 ## OIDC (OpenID Connect) - Identify Layer
@@ -99,8 +99,8 @@ Never trust user provided data or data coming from other apps / services.
 4. Access Token Grant: The authorization server verifies the ID token and, if valid, issues an access token to the client, granting access to the protected API resources. Authorization server may also issue Refresh Token - Client can use it to request new access tokens.
 5. API Access: The client uses the access token to make requests to the API, and the API server validates the token to ensure the user is authorized to access the requested resources
 
-Access token is for API. Id token is for client. JWT are used as Id token.
+Access token is for API. Id token is for client. JWT can be used as tokens.
 
-## Payment Industry Perspective
+## Payment App Considerations
 1. Better to use GUID based token (reference token) to pass around that contains a reference to the identity instead of value token (that contains identity and other details). I.e.; on authentication, identify provider generates GUID, stores it on server along side user record and shares this reference token as access token to the client.
 2. In microservice architecture, API gateway sends the reference token to authorization server and receives back the value token. The value token is passed to individual microservice - that way, each microservice doesn't have to make a call to authorization server - micorservice can verify the token by verifying the signature of the token using authorization server public key.
