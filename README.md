@@ -54,7 +54,7 @@ Never trust user provided data or data coming from other apps / services.
 ### API Security
 1. Minimize exposed APIs / services - helps reduce security exposure
 2. Use https - prevents eavesdropping, man-in-middle attacks. Provides authentication, encryption and integrity.
-3. OAuth2 Authorization
+3. OAuth2 + OIDC (OpenID Connect) - OAuth 2.0 and OpenID Connect (OIDC) are crucial for securing APIs by providing robust authentication and authorization mechanisms. While OAuth 2.0 focuses on delegated authorization, OIDC extends it to include user identity verification, enabling single sign-on and secure access to APIs
 4. Leveled API keys + Key rotation - Read only, write key, admin key, etc. Helps reduce security vulnerability blast radius
 5. Authorization - Role based access control
 6. Rate limiting / Throttling - Protects against DOS attack. Provides security & helps improve performance & availability.
@@ -81,9 +81,15 @@ Never trust user provided data or data coming from other apps / services.
 2. User is authenticated once, issued a JWT that contains information like user role. The JWT can be sent to APIs & APIs can authorize the user for granting access. Helps reduce a load on authentication server.
 3. PKI is used - private key to sign the JWT and public key to verify the JWT
 4. JWT has a. Return address - tells who sent the token, b. Payload - contains claims (Registered claims & Custom claims) c. JWT Wax seal - Signature of JWT to make the JWT temper-proof
-5. Registered claims - has JWT issuer details, JWS subject details (id), Audience for the JWT (API endpoint), Expiry, Issue time
+5. Registered claims - has JWT issuer details, JWT subject details (id), Audience for the JWT (API endpoint), Expiry, Issue time
 6. Custom claims - you can have entities like role or any other custom data that may help authenticate and authorize user
 7. JWT is signed and encoded. No sensitive information should be part of JWT.
 
 ## OAuth2.0 
-1. There are two types of bearer tokens: Identifier-based and Self-contained. Self-contained bearer tokens are easy to scale with distributed applications as they do not require the resource server to validate the token with the authorization server. On the other hand, an Identifier-based token is a hard-to-guess string, which the resource server needs to validate by making a call to the authorisation server's introspection endpoint, which adds latency and makes it difficult to scale with distributed applications.
+1. It is a security standard - accessing your resource (APIs) without sharing your credentials with the resource server and client (Calling Service). Authentication is done by authorization server where your credentails reside. Authorization server issues access token that client shares with the resource provider to access resources.
+2. There are two types of access tokens: Identifier-based and Self-contained. Self-contained access tokens are easy to scale with distributed applications as they do not require the resource server to validate the token with the authorization server. On the other hand, an Identifier-based token is a hard-to-guess string, which the resource server needs to validate by making a call to the authorisation server's introspection endpoint, which adds latency and makes it difficult to scale with distributed applications. JWTs can be used as self-contained access tokens.
+3. OAuth2.0 Flows - 4 flows - use based on system architecture
+
+## OIDC (OpenID Connect)
+1. When OAuth2.0 authorization server supports OIDC, it is also called identity provider. It provides information about the resource owner (you) back to the client. It enables SSO.
+2. It leverages JWT. 
