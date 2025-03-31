@@ -18,19 +18,28 @@ Security vulnerability impacts availability, integrity and confidentiality of da
 3. Post-incident Analysis
 
 ## Design & Development Practices
-### Input validation
+### Secure Coding
+#### Input validation
 Never trust user provided data or data coming from other apps / services. 
 1. Input data validations on type, length, limits.
 2. Rate Limiting / Throttling
 3. Schema based validations
 4. White-listing
 
-### Access Control List
-Practice least privillege access control, denied by default and ZERO trust.
+### Miscellaneous
+1. SQL Injection (%;UPDATE PRODUCT set price=0--) - Use PreparedStatement with parameterized query. JPA's Hibernate implementation is safe.
+2. Password - Hashing + Password specific salt	+ work factor (delay factor) using BCrypt , Scrypt, PBKDF2, Argon2. Avoid MD5, SHA
+3. Encryption - Use AES with 128/256 bits key, secure mode for Symmetric Key Cryptography
+4. File Upload - file name sanitization for path traversal - ensure that it is uploaded to intended directory, check file extension, check file content for allowed type, Minimal access rights on upload directory
+5. Use Random Pseudo number generator for session ids, unique ids - sequential ids are more predictable and prone to enumerating attack
+6. OWASP's Java encoder
+7. SSRF (Server Side Request Forgery) - protech servers from unauthorized internal requests that can lead to data leaks or manipulation.
+8. XML Parsing - For XMLs coming from third party services. In XMLReader, use correct feature settings - disable doc types, disable external entities
+9. YAML - Use SnameYaml2.x with Spring.
 
 ### Usage of Third-party Libs / Frameworks
 1. Review for vulnerablities
-2. Use right security alogrithms, libs.
+2. Use right security alogrithms with correct configurations
 
 ### Secure By Design
 1. Principle of Least Privillege - allow access for minimal period needed
@@ -54,10 +63,6 @@ Practice least privillege access control, denied by default and ZERO trust.
 9. Use API Gateway - Helps centralized implementation of security aspects - rate limiting, authentication, monitoring, logging
 10. Error Handling - Descriptive error messages without any sensitive information. No stack-traces. Use appropriate HTTP status codes
 11. Input validation - Validate request parameters, headers and payloads to prevent SQL injection, Cross-site Scripting attacks
-
-### Secure Coding
-1. Input validations
-2. 
 
 ## Tools & Frameworks
 1. Snyk: Dependency vulnerability scanning
