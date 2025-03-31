@@ -33,9 +33,8 @@ Never trust user provided data or data coming from other apps / services.
 4. File Upload - file name sanitization for path traversal - ensure that it is uploaded to intended directory, check file extension, check file content for allowed type, Minimal access rights on upload directory
 5. Use Random Pseudo number generator for session ids, unique ids - sequential ids are more predictable and prone to enumerating attack
 6. OWASP's Java encoder
-7. SSRF (Server Side Request Forgery) - protech servers from unauthorized internal requests that can lead to data leaks or manipulation.
-8. XML Parsing - For XMLs coming from third party services. In XMLReader, use correct feature settings - disable doc types, disable external entities
-9. YAML - Use SnameYaml2.x with Spring.
+7. XML Parsing - For XMLs coming from third party services. In XMLReader, use correct feature settings - disable doc types, disable external entities
+8. YAML - Use SnameYaml2.x with Spring.
 
 #### Usage of Third-party Libs / Frameworks
 1. Review for vulnerablities
@@ -85,11 +84,23 @@ Never trust user provided data or data coming from other apps / services.
 6. Custom claims - you can have entities like role or any other custom data that may help authenticate and authorize user
 7. JWT is signed and encoded. No sensitive information should be part of JWT.
 
-## OAuth2.0 
-1. It is a security standard - accessing your resource (APIs) without sharing your credentials with the resource server and client (Calling Service). Authentication is done by authorization server where your credentails reside. Authorization server issues access token that client shares with the resource provider to access resources.
-2. There are two types of access tokens: Identifier-based and Self-contained. Self-contained access tokens are easy to scale with distributed applications as they do not require the resource server to validate the token with the authorization server. On the other hand, an Identifier-based token is a hard-to-guess string, which the resource server needs to validate by making a call to the authorisation server's introspection endpoint, which adds latency and makes it difficult to scale with distributed applications. JWTs can be used as self-contained access tokens.
-3. OAuth2.0 Flows - 4 flows - use based on system architecture
+## OAuth2.0 Authorization Framework - For Delegated Access
+1. OAuth 2.0 is a protocol that allows users to grant third-party applications access to their resources without sharing their credentials. It uses access tokens to authorize API requests, allowing clients to access protected resources. It focuses on granting access to resources, not verifying user identity.
+2. Profiles of access tokens: Identifier-based (Holder of Key - like credit card) and Self-contained (Bearer - like cash). Self-contained access tokens are easy to scale with distributed applications as they do not require the resource server to validate the token with the authorization server. On the other hand, an Identifier-based token is a hard-to-guess string, which the resource server needs to validate by making a call to the authorisation server's introspection endpoint, which adds latency and makes it difficult to scale with distributed applications. 
+3. OAuth2.0 Flows - multiple flows - use based on system architecture
 
-## OIDC (OpenID Connect)
-1. When OAuth2.0 authorization server supports OIDC, it is also called identity provider. It provides information about the resource owner (you) back to the client. It enables SSO.
-2. It leverages JWT. 
+## OIDC (OpenID Connect) - Identify Layer
+1. OIDC builds upon OAuth 2.0 by adding an identity layer, enabling clients to verify user identity. It uses ID tokens to authenticate users, allowing applications to determine who the user is without storing credentials. OIDC facilitates single sign-on (SSO), allowing users to log in once and access multiple applications.
+
+## How they work together?
+1. User Authentication: The user logs in with their credentials to an Identity Provider (IdP) that supports OIDC. The user can be a system / service, and credentials can be a device fingerprint.
+2. ID Token Issuance: The IdP issues an ID token to the client, containing information about the user's identity.
+3. Access Token Request: The client uses the ID token to request an access token from the authorization server, which is an OAuth 2.0 server.
+4. Access Token Grant: The authorization server verifies the ID token and, if valid, issues an access token to the client, granting access to the protected API resources. Authorization server may also issue Refresh Token - Client can use it to request new access tokens.
+5. API Access: The client uses the access token to make requests to the API, and the API server validates the token to ensure the user is authorized to access the requested resources
+
+Access token is for API. Id token is for client. JWT are used as Id token.
+
+## Payment Industry Perspective
+1. Better to use GUID based token (reference token) to pass around that contains a reference to the identity instead of value token (that contains identity and other details). I.e.; on authentication, identify provider generates GUID, stores it on server along side user record and shares this reference token as access token to the client.
+2. In microservice architecture, API gateway sends the reference token to authorization server and receives back the value token. The value token is passed to individual microservice - that way, each microservice doesn't have to make a call to authorization server - micorservice can verify the token by verifying the signature of the token using authorization server public key.
