@@ -26,7 +26,7 @@ Never trust user provided data or data coming from other apps / services.
 3. Schema based validations
 4. White-listing
 
-### Miscellaneous
+#### Miscellaneous
 1. SQL Injection (%;UPDATE PRODUCT set price=0--) - Use PreparedStatement with parameterized query. JPA's Hibernate implementation is safe.
 2. Password - Hashing + Password specific salt	+ work factor (delay factor) using BCrypt , Scrypt, PBKDF2, Argon2. Avoid MD5, SHA
 3. Encryption - Use AES with 128/256 bits key, secure mode for Symmetric Key Cryptography
@@ -37,7 +37,7 @@ Never trust user provided data or data coming from other apps / services.
 8. XML Parsing - For XMLs coming from third party services. In XMLReader, use correct feature settings - disable doc types, disable external entities
 9. YAML - Use SnameYaml2.x with Spring.
 
-### Usage of Third-party Libs / Frameworks
+#### Usage of Third-party Libs / Frameworks
 1. Review for vulnerablities
 2. Use right security alogrithms with correct configurations
 
