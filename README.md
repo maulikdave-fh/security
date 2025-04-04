@@ -41,14 +41,15 @@ Never trust user provided data or data coming from other apps / services.
 2. Use right security alogrithms with correct configurations
 
 ### Secure By Design
-1. Principle of Least Privillege - allow access for minimal period needed
-2. Defence in Depth - Multiple inter-related security measures to secure the system - no single point of failure. For example, ID&V, MFA, Firewalls, Malware detection, ACL, Access Scanning, Cryptography for securing data, Backup & recovery, etc.
-3. Fail safe - Murphy's law. If something fails, it should fail in a secured position. For example; if firewall fails, instead of allowing traffic, it should deny all traffic - valid & invalid both.
-4. KISS - More complex the system, more difficult to secure
-5. SRP - Without SRP, one vulnerable service can make the entire system vulenrable.
-6. Segmentation - Provides isolation. Helps reduce the blast radius. E.g.; In cloud, zones can have exclusive power, cooling and network services.
-7. Minimize Attack Surface - Limit external interfaces, Limit Remote Access, Limit IPs, Limit No. of Components
-8. Secure By Default - Reduce attack surface, Change default passwords, Change default admin ids
+1. Zero Trust - Validate every request, validate all data entering your system
+2. Principle of Least Privillege - Clarity on roles and privilleges, allow access for minimal period needed
+3. Defence in Depth - Multiple inter-related security measures to secure the system - no single point of failure. Multiple levels of security: Transport, Network, Infrastructure; OS, Application. For example, ID&V, MFA, Firewalls, Malware detection, ACL, Access Scanning, Cryptography for securing data, Backup & recovery, etc.
+4. Fail safe - Murphy's law. If something fails, it should fail in a secured position. For example; if firewall fails, instead of allowing traffic, it should deny all traffic - valid & invalid both.
+5. KISS - More complex the system, more difficult to secure. Openness of design - easier to identify and fix security flaws, follow security standards
+6. SRP - Without SRP, one vulnerable service can make the entire system vulenrable.
+7. Segmentation - Provides isolation. Helps reduce the blast radius. E.g.; In cloud, zones can have exclusive power, cooling and network services.
+8. Minimize Attack Surface - Limit external interfaces, Limit Remote Access, Limit IPs, Limit No. of Components. Minimize entry points to the system - security filters
+9. Secure By Default - Reduce attack surface, Change default passwords, Change default admin ids
 
 ### API Security
 1. Minimize exposed APIs / services - helps reduce security exposure
