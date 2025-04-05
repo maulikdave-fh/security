@@ -110,6 +110,6 @@ Access token is for API. Id token is for client. JWT can be used as tokens.
 <table>
    <tr><th>Process</th><th>Description</th><th>Is Reversible</th><th>Usecases</th><th>Examples</th></tr>
    <tr><th>Encoding</th><td>Transform data - one form to another.<br/>Doesn't use a key / password<br/>Not used to secure data</td><td>Yes</td><td>Compression, Streaming, Data Storage</td><td>Base64, MP3</td></tr>
-   <tr><th>Hashing</th><td>Convert data into hash<br/>Doesn't use a key / password<br/>One way - not reversible</td><td>No</td><td>Validate integrity of data</td><td>Bcrypt, Argon2</td></tr>
+   <tr><th>Hashing</th><td>Convert data into hash<br/>Doesn't use a key / password<br/>One way - not reversible</td><td>No</td><td>Validate integrity of data, Password storage</td><td>Bcrypt, Argon2</td></tr>
    <tr><th>Encryption</th><td>Encoding data using key/password.<br/>Need key to decrypt<td>Yes</td><td>Securing data</td><td>RSA</td></tr>
 </table>
