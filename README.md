@@ -77,13 +77,35 @@ Never trust user provided data or data coming from other apps / services.
 10. Spring Security
 
 ## JWT (JSON Web Token)
-1. Secure way of transmitting information between 2 parties in stateless manner - unlike session token where subsequent requests to server with a session token has to land on the same server that issued the session token. JWTs are ideal for distributed systems.
-2. User is authenticated once, issued a JWT that contains information like user role. The JWT can be sent to APIs & APIs can authorize the user for granting access. Helps reduce a load on authentication server.
-3. PKI is used - private key to sign the JWT and public key to verify the JWT
-4. JWT has a. Return address - tells who sent the token, b. Payload - contains claims (Registered claims & Custom claims) c. JWT Wax seal - Signature of JWT to make the JWT temper-proof
-5. Registered claims - has JWT issuer details, JWT subject details (id), Audience for the JWT (API endpoint), Expiry, Issue time
-6. Custom claims - you can have entities like role or any other custom data that may help authenticate and authorize user
-7. JWT is signed and encoded. No sensitive information should be part of JWT.
+1. Open, industry standard for representing claims securly between two parties. It can contains user details and authorizatins
+2. Secure way of transmitting information between 2 parties in stateless manner - unlike session token where subsequent requests to server with a session token has to land on the same server that issued the session token. JWTs are ideal for distributed systems.
+3. User is authenticated once, issued a JWT that contains information like user role. The JWT can be sent to APIs & APIs can authorize the user for granting access. Helps reduce a load on authentication server.
+4. PKI is used - private key to sign the JWT and public key to verify the JWT
+5. JWT has a. Return address - tells who sent the token, b. Payload - contains claims (Registered claims & Custom claims) c. JWT Wax seal - Signature of JWT to make the JWT temper-proof
+6. Registered claims - has JWT issuer details, JWT subject details (id), Audience for the JWT (API endpoint), Expiry, Issue time
+7. Custom claims - you can have entities like role or any other custom data that may help authenticate and authorize user
+8. JWT is signed and encoded. No sensitive information should be part of JWT.
+
+### JWT Format
+<table>
+   <tr><th>HEADER - ALGORITHMS & TOKEN TYPE</th></tr>
+   <tr><td>Type: JWT<br/>Hashing Algo: HS512</td></tr>
+<tr><th>PAYLOAD - DATA</th></tr>
+   <tr><td><b>Standard Attributes:</b> <br/><li>iss: Token issuer</li><li>sub: Subject - whom this toke is about</li><li>aud - Intended Audience</li><li>exp: Expiry Date</li><li>iat: When was token issued</li><p></p><b>Custom Attributes:</b><br><li>yourattr1: Your custom attribute 1</li></td></tr>
+   <tr><th>SIGNATURE - FOR VERIFICATION</th></tr>
+   <tr><td>HMACSHA256(Base64(HEADER) + "." + Base64(PAYLOAD), your-256-bit-secret)<br/>Includes a secret</td></tr>   
+</table>
+
+### High Level JWT Flow
+#### Create a JWT
+1. Needs encoding - User credentials, user data (payload), RSA key pair
+
+#### Send JWT 
+JWT is sent as part of request header ```Authorization: Bearer ${JWT}```
+
+#### Verify JWT
+1. Needs decoding
+2. RSA key pair (public key)
 
 ## OAuth2.0 Authorization Framework - For Delegated Access
 1. OAuth 2.0 is a protocol that allows users to grant third-party applications access to their resources without sharing their credentials. It uses access tokens to authorize API requests, allowing clients to access protected resources. It focuses on granting access to resources, not verifying user identity.
