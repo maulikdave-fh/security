@@ -90,7 +90,7 @@ Never trust user provided data or data coming from other apps / services.
 2. Profiles of access tokens: Identifier-based (Holder of Key - like credit card - reference token) and Self-contained (Bearer - like cash - value token). Self-contained access tokens are easy to scale with distributed applications as they do not require the resource server to validate the token with the authorization server. On the other hand, an Identifier-based token is a hard-to-guess string, which the resource server needs to validate by making a call to the authorisation server's introspection endpoint, which adds latency and makes it difficult to scale with distributed applications. 
 3. OAuth2.0 Flows - multiple flows - use based on system architecture
 
-## OIDC (OpenID Connect) - Identify Layer
+## OIDC (OpenID Connect) - Identity Layer
 1. OIDC builds upon OAuth 2.0 by adding an identity layer, enabling clients to verify user identity. It uses ID tokens to authenticate users, allowing applications to determine who the user is without storing credentials. OIDC facilitates single sign-on (SSO), allowing users to log in once and access multiple applications.
 
 ## How they work together?
@@ -105,3 +105,11 @@ Access token is for API. Id token is for client. JWT can be used as tokens.
 ## Payment App Considerations
 1. Better to use GUID based token (reference token) to pass around that contains a reference to the identity instead of value token (that contains identity and other details). I.e.; on authentication, identify provider generates GUID, stores it on server along side user record and shares this reference token as access token to the client.
 2. In microservice architecture, API gateway sends the reference token to authorization server and receives back the value token. The value token is passed to individual microservice - that way, each microservice doesn't have to make a call to authorization server - micorservice can verify the token by verifying the signature of the token using authorization server public key.
+
+## Encoding vs. Hashing vs. Encryption
+<table>
+   <tr><th>Process</th><th>Description</th><th>Is Reversible</th><th>Usecases</th><th>Examples</th></tr>
+   <tr><th>Encoding</th><td>Transform data - one form to another.<br/>Doesn't use a key / password<br/>Not used to secure data</td><td>Yes</td><td>Compression, Streaming, Data Storage</td><td>Base64, MP3</td></tr>
+   <tr><th>Hashing</th><td>Convert data into hash<br/>Doesn't use a key / password<br/>One way - not reversible</td><td>No</td><td>Validate integrity of data</td><td>Bcrypt, Argon2</td></tr>
+   <tr><th>Encryption</th><td>Encoding data using key/password.<br/>Need key to decrypt<td>Yes</td><td>Securing data</td><td>RSA</td></tr>
+</table>
